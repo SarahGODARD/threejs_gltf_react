@@ -8,7 +8,7 @@ import duck from './torigate.gltf'
 function Duck() {
   var x = 0.001
   var y = 0.001
-  var p = 0.01
+  var p = 0.001
   const gltf = useLoader(GLTFLoader, duck)
   useFrame((state, delta) => {
     gltf.scene.rotation.x += x
@@ -25,15 +25,15 @@ function Duck() {
     }
     gltf.scene.position.y += p
     if (gltf.scene.position.y > 0.5){
-      p = -0.01
-    } else if (gltf.scene.position.y < 0){
-      p = 0.01
+      p = -0.001
+    } else if (gltf.scene.position.y < -0.5){
+      p = 0.001
     }
   })
 
   return (
-    <primitive autoRotate object={gltf.scene} position={[0, 0, 0]} rotation={[0, 0, 0]} />
-  )
+      <primitive autoRotate object={gltf.scene} position={[0, 0, 0]} rotation={[0, 0, 0]} />
+    )
 }
 
 function App() {
@@ -42,14 +42,16 @@ function App() {
   }
   return (
     <>
-      <Canvas onScroll={lol} camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 10, 20] }} 
+    <Suspense fallback="loading...">
+      <Canvas onScroll={lol} camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 1, 20] }} 
        
       dpr={[1, 2]}
       style={{ height: 800 }}>
         <ambientLight intensity={0.5} />
         <spotLight intensity={2} position={[0, 300, 400]} />
-        <Duck />
+          <Duck />
       </Canvas>
+      </Suspense>
     </>
   )
 }
