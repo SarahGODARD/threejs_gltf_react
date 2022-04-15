@@ -1,17 +1,11 @@
 import React, { useRef } from "react";
-import Bottom from "./Bottom";
 import useVisible from "./Scroll";
-import Torigate from "./Torigate";
 
-function App() {
+const Bottom=()=> {
   const elemRef = useRef();
   const isVisible = useVisible(elemRef);
   return (
-      <div>
-
-<Torigate/>
-    <Bottom/>
-      </div>
+    <div onScroll={console.log("scroool")} ref={elemRef}>hello {isVisible && console.log("visible")}</div>
 )}
 
-export default App;
+export default Bottom;
