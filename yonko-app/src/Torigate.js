@@ -6,71 +6,74 @@ import { Stage, OrbitControls } from '@react-three/drei'
 import physic from './torigate.gltf'
 import useIsVisible from "./Scroll.js"
 import * as THREE from "three";
+import "./styles.css"
+import { useNavigate } from "react-router-dom"
+import { unmountComponentAtNode, render } from "react-dom";
 
-function Physic () {
-  const onScroll=() => {
-    console.log("scroll")
-  }
-  var x = 0.001
-  var y = 0.03
-  var p = 0.01
-  var r = 1
-  var py = 0.01
+
+
+function Physic ({isScrolling, route}) {
+  var y = 0.01
   var timeelapsed = 0
   const gltf = useLoader(GLTFLoader, physic)
+  gltf.scene.scale.set(1, 1, 1)
+  const [e, sete] = useState(0);
+
+  
+
   useFrame((state, delta) => {
+    
     timeelapsed += delta
-    if (r == 1) {
       gltf.scene.position.y = Math.cos( timeelapsed ) * 0.4;
-    if (gltf.scene.rotation.x > 0.3){
-      x = -0.05
-    } else if (gltf.scene.rotation.x < 0){
-      x = 0.05
-    }
     if (gltf.scene.rotation.y > 3.1){
       y = 0
     }
-       /* r = 0
-        console.log( gltf.scene.rotation.x,  gltf.scene.rotation.y,  gltf.scene.rotation.z)
-      } else if (gltf.scene.rotation.y>2.5) {
-        y = 0.01
-      } else if (gltf.scene.rotation.y<2.5) {
-        y = 0.01
-      } */
-      
-      if (gltf.scene.position.y > 0.5){
-        
-        p = -0.5
-      } else if (gltf.scene.position.y < -0.5){
-        p = 0.1
-      }
-      /*
-      
-      gltf.scene.position.z += p
-      gltf.scene.rotation.x += x
-      */
-      gltf.scene.rotation.y += y
+    if (y == 0 && isScrolling==1){
+     gltf.scene.position.z += 0.1
     }
-    
+    if (gltf.scene.position.z > 20) {
+      sete(1)
+      route("/lol")
+      // du coup je change le return?
+    }
+    gltf.scene.rotation.y += y
   })
+  console.log("e", e)
+  if (e == 0) {
+    console.log(e)
+    return (
+    
+      <primitive classname="Torigate" autoRotate object={gltf.scene} position={[0,0,0]} rotation={[0, 0, 0]} />
+      )
+  } else {
+    console.log("loqkgpqekg")
+    return "lol"
+  }
+  }
 
-  return (
-      <primitive autoRotate object={gltf.scene} position={[0, 0, 0]} rotation={[0, 0, 0]} />
-    )
+
+const  Torigate = ({isScrolling}, {y}) => {
+  const navigate = useNavigate()
+    /*navigate("/lol")*/
+  const vec = new THREE.Vector3()
+function MoveCamera() {
+  useFrame(({ camera }) => {
+    camera.position.lerp(vec.set(0,0,20), 0.1)
+    //camera.position.z = 20 - isScrolling/20
+  })
+  return null
 }
-
-
-const  Torigate = () => {
+var e = 1
+  y = -1
   return (
     <>
     <Suspense  fallback="loading">
-      <Canvas camera={{ fov: 75, near: 0.1, far: 1000, position: [0, 1, 20] }} 
-       
-      dpr={[1, 2]}
-      style={{ height: 800 }}>
+      <Canvas camera={{position: [0, 0, 0] }} style={{height:800}}>
         <ambientLight intensity={0.5} />
+        <MoveCamera />
         <spotLight intensity={2} position={[0, 300, 400]} />
-          <Physic />
+          <Physic  isScrolling={isScrolling} route={navigate}/>
+          
       </Canvas>
       </Suspense>
     </>
