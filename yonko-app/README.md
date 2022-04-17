@@ -22,7 +22,7 @@ npm start
 
 go to : http://localhost:3000/
 
-You can now see the tori gate animated. If you sccroll down, you will enter in it and go to the welcome page. Enjoy !
+The gltf will load. Then, you will see the tori gate animated. Once finished, if you scroll down, you will enter and go to the welcome page. Enjoy !
 
 ## Routes
 
