@@ -33,33 +33,23 @@ function Physic ({isScrolling, route}) {
     }
     if (gltf.scene.position.z > 20) {
       sete(1)
-      route("/lol")
-      // du coup je change le return?
+      route("/welcome")
     }
     gltf.scene.rotation.y += y
   })
-  console.log("e", e)
-  if (e == 0) {
-    console.log(e)
     return (
     
       <primitive classname="Torigate" autoRotate object={gltf.scene} position={[0,0,0]} rotation={[0, 0, 0]} />
       )
-  } else {
-    console.log("loqkgpqekg")
-    return "lol"
-  }
   }
 
 
 const  Torigate = ({isScrolling}, {y}) => {
   const navigate = useNavigate()
-    /*navigate("/lol")*/
   const vec = new THREE.Vector3()
 function MoveCamera() {
   useFrame(({ camera }) => {
     camera.position.lerp(vec.set(0,0,20), 0.1)
-    //camera.position.z = 20 - isScrolling/20
   })
   return null
 }
@@ -73,7 +63,6 @@ var e = 1
         <MoveCamera />
         <spotLight intensity={2} position={[0, 300, 400]} />
           <Physic  isScrolling={isScrolling} route={navigate}/>
-          
       </Canvas>
       </Suspense>
     </>

@@ -1,21 +1,22 @@
 import React, { useRef } from "react";
-import Bottom from "./Bottom";
 import useVisible from "./Scroll";
 import Torigate from "./Torigate";
 import { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
-import "./styles.css";
 import { useFrame } from "react-three-fiber";
 import { Route, Routes } from "react-router-dom";
+import Welcome from "./Welcome";
 
+/*
+App
+The a wrapper. Contains routes for home page and welcome page.
+*/
 
-function Lol() {
-  return("footbar")
-}
 function App() {
   const [scrollY, setScrollY] = useState(0);
   const [y, setY] = useState(window.scrollY);
 
+  // Set scrollY variable to check if its scrolling down or up
   const handleNavigation = useCallback(
     e => {
       const window = e.currentTarget;
@@ -32,19 +33,7 @@ function App() {
 
   function logit() {
     setScrollY(window.pageYOffset);
-    //console.log(new Date().getTime());
-    //console.log(scrollY)
   }
-  /*useEffect(() => {
-    function watchScroll() {
-      window.addEventListener("scroll", logit);
-    }
-    watchScroll();
-    return () => {
-      window.removeEventListener("scroll", logit);
-    }, [handleNavigation];
-    
-  });*/
   useEffect(() => {
     setY(window.scrollY);
     window.addEventListener("scroll", handleNavigation);
@@ -57,9 +46,8 @@ function App() {
   return (
     <div >
       <Routes>
-      <Route exact path="/" element={<Torigate isScrolling={scrollY}/>}/>
-      <Route exact path="/lol" element={"welcome to yonko"}/>
-      
+        <Route exact path="/" element={<Torigate isScrolling={scrollY}/>}/>
+        <Route exact path="/welcome" element={<Welcome/>}/>
       </Routes>
     </div>
   );
