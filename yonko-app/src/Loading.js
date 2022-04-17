@@ -7,18 +7,18 @@ import { Route, Routes } from "react-router-dom";
 import "./styles.css"
 
 /*
-WELCOME
+LOADING
 
 Return animate text for xalcome page. 
 */
 
-function Welcome() {
+function Loading() {
     return (
         <div style={{position: 'absolute', left: '50%', top: '50%',
         transform: 'translate(-50%, -50%)'}} class="wrapper">
   <div class="row">
     <div class="col-md-5 text-center">
-      <h3 class="animate-charcter">Welcome to Yonko</h3>
+      <h3 class="loading">Loading</h3>
     </div>
   </div>
 </div>
@@ -26,4 +26,4 @@ function Welcome() {
     
 }
 
-export default Welcome;
+export default Loading;

@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import useVisible from "./Scroll";
 import Torigate from "./Torigate";
 import { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
@@ -16,7 +15,7 @@ function App() {
   const [scrollY, setScrollY] = useState(0);
   const [y, setY] = useState(window.scrollY);
 
-  // Set scrollY variable to check if its scrolling down or up
+  // Set scrollY variable to check if its scrolling down or up.
   const handleNavigation = useCallback(
     e => {
       const window = e.currentTarget;
@@ -31,6 +30,7 @@ function App() {
     }, [y]
   );
 
+  // Set up scrolling event.
   function logit() {
     setScrollY(window.pageYOffset);
   }
